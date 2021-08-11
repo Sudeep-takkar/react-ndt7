@@ -7,6 +7,7 @@ import {
 } from '@material-ui/core';
 import _ from 'lodash';
 import { test } from './utils/ndt7';
+import { usePosition } from './utils/usePosition';
 
 const useStyles = makeStyles((theme) => ({
   table: {
@@ -40,6 +41,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [downloadSpeed, setDownloadSpeed] = useState(0);
   const [uploadSpeed, setUploadSpeed] = useState(0);
+  const { latitude, longitude, error } = usePosition();
 
   const fetchData = async () => {
     setIsLoading(true);
@@ -119,6 +121,17 @@ function App() {
               </TableCell>
               <TableCell>Upload</TableCell>
               <TableCell>{`${uploadSpeed} Mbps`}</TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                {!error && <Icon>my_location</Icon>}
+                {error && <Icon>location_off</Icon>}
+              </TableCell>
+              <TableCell>Coordinates</TableCell>
+              {!error &&
+                <TableCell>{`Lat: ${latitude}, Long: ${longitude}`}</TableCell>
+              }
+              {error && <TableCell>{`Error: ${error}`}</TableCell>}
             </TableRow>
           </TableBody>
         </Table>
