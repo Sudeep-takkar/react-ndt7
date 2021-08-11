@@ -125,7 +125,7 @@ function App() {
             <TableRow>
               <TableCell>
                 {!error && <Icon>my_location</Icon>}
-                {error && <Icon>location_off</Icon>}
+                {error && <Icon>location_disabled</Icon>}
               </TableCell>
               <TableCell>Coordinates</TableCell>
               {!error &&
