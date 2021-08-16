@@ -1,26 +1,28 @@
-import { useState, useEffect } from 'react';
+import _ from 'lodash';
 export const usePosition = () => {
-    const [position, setPosition] = useState({});
-    const [error, setError] = useState(null);
+    const getAddress = async (lat, long) => {
+        const GEO_CODE_API = 'https://maps.googleapis.com/maps/api/geocode/json'
+        console.log(lat, long, process.env);
+        return await fetch(`${GEO_CODE_API}?latlng=${lat},${long}&key=${process.env.REACT_APP_GEO_CODE_API_KEY}`)
+            .then(response => response.json())
+            .then(data => _.get(data, 'results.0.formatted_address'));
+    }
 
-    const onChange = ({ coords }) => {
-        setPosition({
-            latitude: coords.latitude,
-            longitude: coords.longitude,
-        });
-    };
-    const onError = (error) => {
-        setError(error.message);
-    };
-    useEffect(() => {
+    const getLocation = () => {
         const geo = navigator.geolocation;
         if (!geo) {
-            setError('Geolocation is not supported');
-            return;
+            return new Promise(resolve =>
+                setTimeout(() => resolve({ error: 'Geolocation is not supported' }), 500))
         }
-        // console.log(geo.getCurrentPosition)
-        let watcher = geo.watchPosition(onChange, onError);
-        return () => geo.clearWatch(watcher);
-    }, []);
-    return { ...position, error };
+        return new Promise((resolve, reject) => {
+            geo.getCurrentPosition(async response => {
+                let address = await getAddress(_.get(response, 'coords.latitude'), _.get(response, 'coords.longitude'));
+                resolve({ address: address, latitude: _.get(response, 'coords.latitude'), longitude: _.get(response, 'coords.longitude') });
+            }, (err) => {
+                setTimeout(() => resolve({ error: err.message }), 500)
+            });
+        });
+    }
+
+    return { getLocation };
 }
