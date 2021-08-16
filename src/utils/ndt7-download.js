@@ -12,7 +12,6 @@ const downloadWorker = () => {
             now = () => performance.now();
         }
         sock.onclose = () => {
-            console.log('completed')
             postMessage({
                 MsgType: 'complete',
             });

@@ -1,8 +1,7 @@
 import _ from 'lodash';
 export const usePosition = () => {
     const getAddress = async (lat, long) => {
-        const GEO_CODE_API = 'https://maps.googleapis.com/maps/api/geocode/json'
-        console.log(lat, long, process.env);
+        const GEO_CODE_API = 'https://maps.googleapis.com/maps/api/geocode/json';
         return await fetch(`${GEO_CODE_API}?latlng=${lat},${long}&key=${process.env.REACT_APP_GEO_CODE_API_KEY}`)
             .then(response => response.json())
             .then(data => _.get(data, 'results.0.formatted_address'));

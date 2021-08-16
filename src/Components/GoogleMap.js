@@ -6,6 +6,10 @@ const useStyles = makeStyles(() => ({
         position: 'absolute',
         transform: 'translate(-50%, -50%)'
 
+    },
+    map: { 
+        height: '200px', 
+        width: '300px' 
     }
 }));
 
@@ -16,7 +20,7 @@ function GoogleMap({ coords, location }) {
     const classes = useStyles();
     return (
         <>
-            {coords && coords.lat && <div style={{ height: '200px', width: '300px' }}>
+            {coords && coords.lat && <div className={classes.map}>
                 <GoogleMapReact
                     bootstrapURLKeys={{ key: process.env.REACT_APP_GEO_CODE_API_KEY }}
                     defaultCenter={{

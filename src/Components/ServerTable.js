@@ -10,12 +10,11 @@ const useStyles = makeStyles(() => ({
 }));
 
 function ServerTable({ data }) {
-    console.log(data)
     const classes = useStyles();
     return (
         <>
             {data && <TableContainer component={Paper} className={classes.table}>
-                <Table aria-label="simple table">
+                <Table aria-label="server details table">
                     <TableBody>
                         <TableRow>
                             <TableCell>Machine</TableCell>
