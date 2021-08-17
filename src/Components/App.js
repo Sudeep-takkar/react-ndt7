@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import {
     Icon, Container, makeStyles, Box,  Button, CircularProgress
 } from '@material-ui/core';
-import '../App.css';
 import _ from 'lodash';
 import { test, discoverServerURLs } from '../utils/ndt7';
 import { usePosition } from '../utils/usePosition';
@@ -90,13 +89,12 @@ function App() {
                         machine: _.get(server, 'machine')
                     });
                     setServerStep({ text: 'Server Details', icon: 'dns' });
-                    setIsFetchingData(false);
                     setStepNumber(2);
                 }
             }
         );
 
-        //Step 3: Start Speed Test
+        //Step 3: Perform Speed Test
         setTimeout(() => {
             setTestStep({ text: 'Download Test', icon: 'loading'});
             test({
@@ -114,6 +112,7 @@ function App() {
                 },
                 uploadComplete: data => {
                     setTestStep({ text: 'Speed Test', icon: 'speed' });
+                    setIsFetchingData(false);
                 }
             });
         }, 500);

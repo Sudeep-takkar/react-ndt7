@@ -19,12 +19,12 @@ function TestResultTable({downloadSpeed, uploadSpeed}) {
                         <TableRow>
                             <TableCell><Icon>download</Icon></TableCell>
                             <TableCell>Download</TableCell>
-                            <TableCell>{downloadSpeed}</TableCell>
+                            <TableCell>{`${downloadSpeed} Mbps`}</TableCell>
                         </TableRow>
                         <TableRow>
                             <TableCell><Icon>upload</Icon></TableCell>
                             <TableCell>Upload</TableCell>
-                            <TableCell>{uploadSpeed}</TableCell>
+                            <TableCell>{uploadSpeed ? `${uploadSpeed} Mbps` : '-'}</TableCell>
                         </TableRow>
                     </TableBody>
                 </Table>
